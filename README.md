@@ -115,10 +115,3 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 
 
 ---
-
-### 💡 Uma dica importante:
-Para que seus amigos consigam instalar tudo com o comando `pip install -r requirements.txt`, você precisa gerar esse arquivo. 
-
-**Rode isso agora no seu terminal:**
-```bash
-pip freeze > requirements.txt
