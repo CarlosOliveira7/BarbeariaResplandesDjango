@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Exclusão | Barbearia{% endblock %}
+
+{% block breadcrumb %}
+    / <a href="{% url 'cliente_list' %}" class="hover:text-gray-100 transition">Clientes</a> / <span class="ml-2 text-red-400">Excluir</span>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-[#111111] p-8 rounded-2xl border border-[#222222] shadow-2xl mt-12 text-center">
+
+    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-950/30 border border-red-900/50 mb-6">
+        <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+    </div>
+
+    <h2 class="text-2xl font-bold text-white mb-2">Confirmar Exclusão</h2>
+    
+    <p class="text-gray-400 mb-8 text-sm leading-relaxed">
+        Tem certeza que deseja excluir permanentemente o cliente <br>
+        <strong class="text-gray-200 text-lg block mt-2">{{ object.nome }}</strong>
+        <span class="text-red-400 block mt-3 font-medium">Esta ação não poderá ser desfeita.</span>
+    </p>
+    
+    <form method="post" class="flex justify-center gap-4">
+        {% csrf_token %}
+        
+        <a href="{% url 'cliente_list' %}" class="px-6 py-2.5 bg-[#0a0a0a] border border-[#333333] hover:bg-[#222222] hover:border-[#444444] text-gray-300 font-semibold rounded-xl transition text-sm">
+            Cancelar
+        </a>
+        
+        <button type="submit" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-md transition text-sm flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Sim, Excluir
+        </button>
+    </form>
+</div>
+{% endblock %}
