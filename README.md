@@ -1,9 +1,9 @@
 Markdown
 
-# 💈 Barbearia System
+# 💈 Barbearia Resplandes
 
 Sistema de gerenciamento para barbearias desenvolvido com **Django**, **MySQL** e **Tailwind CSS**. 
-O projeto conta com módulos de Clientes, Barbeiros e Serviços, utilizando uma interface moderna em Dark Mode.
+O projeto conta com módulos de Clientes, Barbeiros e Serviços.
 
 ---
 
