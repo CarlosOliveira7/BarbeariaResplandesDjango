@@ -820,6 +820,9 @@
     --tw-outline-style: none;
     outline-style: none;
   }
+  .active\:bg-\[\#222222\]:active {
+    background-color: #222222;
+  }
   @media (width >= 48rem) {
     .md\:flex {
       display: flex;
