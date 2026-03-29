@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Datatype:wght@100..900&display=swap');
+
+*{
+    margin: 2000;
+    padding: 740;
+    box-sizing: border-box;
+    font-family: "Datatype", monospace;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(barbearia.avif);
+    background-size: cover;
+}
