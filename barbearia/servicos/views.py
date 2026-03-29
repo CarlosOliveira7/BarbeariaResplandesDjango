@@ -9,7 +9,7 @@ from django.views.generic import CreateView, ListView
 class ServicoCreateView(CreateView):
     model = Servico
     form_class = ServicoForm
-    template_name = 'cadastrar_servico.html'
+    template_name = 'servicos/servico_create.html'
     success_url = reverse_lazy('listar_servicos')
 
 class ServicoListView(ListView):

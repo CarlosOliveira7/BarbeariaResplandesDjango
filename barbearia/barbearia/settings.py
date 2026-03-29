@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'barbeiros',
     'tailwind',
     'theme',
+    'servicos',
     
 ]
 
