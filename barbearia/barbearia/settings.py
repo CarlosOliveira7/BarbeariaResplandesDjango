@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-03#f-&zfg5r65=0*80(foe@5k0laovaz*hbnmzbgbm_wp2$0+b
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+LANGUAGE_CODE = 'pt-br'
 ALLOWED_HOSTS = []
 
 
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'servicos',
-    
+    'agendamentos',
+    'financeiro'
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'barbearia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+
 
 TIME_ZONE = 'UTC'
 
@@ -133,3 +134,7 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/agendamentos/'
+LOGOUT_REDIRECT_URL = 'login'

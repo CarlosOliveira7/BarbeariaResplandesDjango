@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | Barbearia{% endblock %}
+
+{% block breadcrumb %}
+    <span class="text-gray-500">/</span> <span class="text-gray-300 ml-2">Dashboard</span>
+{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <h2 style="font-size: 1.5rem; font-weight: bold; color: white; margin-bottom: 0;">Dashboard</h2>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                
+                <div style="background-color: #171717; border-left: 4px solid #3b82f6; border-radius: 0.5rem; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; min-height: 160px;">
+                    <p style="color: white; font-size: 1.125rem; font-weight: 600; margin: 0;">Total de Clientes</p>
+                    <p style="color: white; font-size: 2.25rem; font-weight: 300; margin: 1rem 0 0 0;">{{ total_clientes|default:"1" }}</p>
+                </div>
+
+                <div style="background-color: #171717; border-left: 4px solid #22c55e; border-radius: 0.5rem; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; min-height: 160px;">
+                    <p style="color: white; font-size: 1.125rem; font-weight: 600; margin: 0;">Total de Barbeiros</p>
+                    <p style="color: white; font-size: 2.25rem; font-weight: 300; margin: 1rem 0 0 0;">{{ total_barbeiros|default:"0" }}</p>
+                </div>
+
+                <div style="background-color: #171717; border-left: 4px solid #eab308; border-radius: 0.5rem; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; min-height: 160px;">
+                    <p style="color: white; font-size: 1.125rem; font-weight: 600; margin: 0;">Agendamentos</p>
+                    <p style="color: white; font-size: 2.25rem; font-weight: 300; margin: 1rem 0 0 0;">{{ total_agendamentos|default:"0" }}</p>
+                </div>
+
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                
+                <div style="background-color: #171717; border-left: 4px solid #8b5cf6; border-radius: 0.5rem; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; min-height: 160px;">
+                    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <p style="color: #9ca3af; font-size: 0.875rem; font-weight: 600; margin: 0; text-transform: uppercase;">Receitas</p>
+                            <p style="color: #10b981; font-size: 1.5rem; font-weight: 300; margin: 0;">R$ {{ total_receitas|default:"0,00" }}</p>
+                        </div>
+                        <div>
+                            <p style="color: #9ca3af; font-size: 0.875rem; font-weight: 600; margin: 0; text-transform: uppercase;">Despesas</p>
+                            <p style="color: #ef4444; font-size: 1.5rem; font-weight: 300; margin: 0;">R$ {{ total_despesas|default:"0,00" }}</p>
+                        </div>
+                    </div>
+                    
+                    <div style="border-top: 1px solid #374151; padding-top: 1rem;">
+                        <p style="color: white; font-size: 1rem; font-weight: 600; margin: 0;">Saldo Líquido</p>
+                        <p id="saldo-valor" style="color: white; font-size: 2.25rem; font-weight: bold; margin: 0;">R$ 0,00</p>
+                    </div>
+                </div>
+
+                <div style="background-color: #171717; border-radius: 0.5rem; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 160px; position: relative;">
+                    
+                    <div style="position: absolute; top: 1rem; left: 1.5rem; display: flex; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 1.5rem; height: 0.5rem; background-color: #10b981;"></div>
+                            <span style="color: #6b7280; font-size: 0.65rem; text-transform: uppercase;">Receitas</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 1.5rem; height: 0.5rem; background-color: #ef4444;"></div>
+                            <span style="color: #6b7280; font-size: 0.65rem; text-transform: uppercase;">Despesas</span>
+                        </div>
+                    </div>
+
+                    <div id="donut-chart" 
+                         data-receitas="{{ total_receitas|default:'0' }}" 
+                         data-despesas="{{ total_despesas|default:'0' }}"
+                         style="width: 6.5rem; height: 6.5rem; border-radius: 50%; margin-top: 1.5rem; background: conic-gradient(#374151 0deg 360deg); display: flex; align-items: center; justify-content: center; transition: background 0.5s ease-in-out;">
+                        <div style="width: 4rem; height: 4rem; background-color: #171717; border-radius: 50%;"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const chart = document.getElementById("donut-chart");
+        const saldoElement = document.getElementById("saldo-valor");
+        
+        // Função para converter o texto do Django em número pro Javascript
+        function parseCurrency(val) {
+            if (!val) return 0;
+            let strVal = val.toString().replace(/[^\d.,-]/g, ''); 
+            if (strVal.includes(',')) {
+                strVal = strVal.replace(/\./g, '').replace(',', '.'); 
+            }
+            return parseFloat(strVal) || 0;
+        }
+
+        const receitas = parseCurrency(chart.getAttribute("data-receitas"));
+        const despesas = parseCurrency(chart.getAttribute("data-despesas"));
+        
+        // 1. Lógica do Gráfico de Anel
+        const total = receitas + despesas;
+        if (total > 0) {
+            const grausReceita = (receitas / total) * 360;
+            chart.style.background = `conic-gradient(#10b981 0deg ${grausReceita}deg, #ef4444 ${grausReceita}deg 360deg)`;
+        }
+
+        // 2. Lógica do Saldo Líquido
+        const saldo = receitas - despesas;
+        
+        // Formatar de volta para Dinheiro (R$ 1.000,00)
+        const saldoFormatado = saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        saldoElement.innerText = saldoFormatado;
+
+        // Mudar cor do Saldo dinamicamente
+        if (saldo > 0) {
+            saldoElement.style.color = "#10b981"; // Verde (Lucro)
+        } else if (saldo < 0) {
+            saldoElement.style.color = "#ef4444"; // Vermelho (Prejuízo)
+        } else {
+            saldoElement.style.color = "#9ca3af"; // Cinza (Zerado)
+        }
+    });
+</script>
+{% endblock %}

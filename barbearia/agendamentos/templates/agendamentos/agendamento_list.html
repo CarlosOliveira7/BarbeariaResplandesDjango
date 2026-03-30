@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Serviços | Barbearia{% endblock %}
+{% block title %}Agendamentos | Barbearia{% endblock %}
 
 {% block breadcrumb %}
-    <span class="text-gray-500">/</span> <span class="text-gray-300 ml-2">Serviços</span>
+    / <span class="text-gray-300 ml-2">Agendamentos</span>
 {% endblock %}
 
 {% block content %}
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
+    
     <div class="bg-[#111111] rounded-2xl border border-[#222222] shadow-2xl overflow-hidden">
 
         <div class="flex items-center justify-between px-4 sm:px-8 py-6 border-b border-[#222222]">
@@ -15,45 +15,56 @@
                 <div class="p-3 bg-[#161616] border border-[#333333] rounded-xl text-gray-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-bold text-white tracking-tight">Serviços</h2>
-                    <p class="text-gray-500 text-sm mt-0.5">{{ servicos.count }} serviço(s) cadastrado(s)</p>
+                    <h2 class="text-2xl font-bold text-white tracking-tight">Agendamentos</h2>
+                    <p class="text-gray-500 text-sm mt-0.5">{{ agendamentos.count }} agendamento(s) cadastrado(s)</p>
                 </div>
             </div>
-            <a href="{% url 'servico_create' %}"
+            <a href="{% url 'agendamento_create' %}"
                 class="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-gray-200 text-gray-950 font-bold rounded-xl shadow-md transition text-sm whitespace-nowrap">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                 </svg>
-                Novo Serviço
+                Novo Agendamento
             </a>
         </div>
 
-        {% if servicos %}
+        {% if agendamentos %}
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b border-[#222222] text-gray-500 uppercase text-xs tracking-wider">
-                        <th class="px-4 sm:px-8 py-4 text-left font-medium">Nome</th>
-                        <th class="px-4 sm:px-8 py-4 text-left font-medium">Preço</th>
+                        <th class="px-4 sm:px-8 py-4 text-left font-medium">Data</th>
+                        <th class="px-4 sm:px-8 py-4 text-left font-medium">Cliente</th>
+                        <th class="px-4 sm:px-8 py-4 text-left font-medium">Barbeiro</th>
+                        <th class="px-4 sm:px-8 py-4 text-left font-medium">Status</th>
                         <th class="px-4 sm:px-8 py-4 text-right font-medium">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#1a1a1a]">
-                    {% for servico in servicos %}
+                    {% for agendamento in agendamentos %}
                     <tr class="hover:bg-[#161616] transition">
-                        <td class="px-4 sm:px-8 py-4 text-gray-300 font-medium whitespace-nowrap">{{ servico.nome }}</td>
-                        <td class="px-4 sm:px-8 py-4 text-gray-300 whitespace-nowrap">R$ {{ servico.preco }}</td>
+                        <td class="px-4 sm:px-8 py-4 text-gray-300 whitespace-nowrap">{{ agendamento.data|date:"d/m/Y H:i" }}</td>
+                        <td class="px-4 sm:px-8 py-4 text-gray-300 whitespace-nowrap">{{ agendamento.cliente }}</td>
+                        <td class="px-4 sm:px-8 py-4 text-gray-300 whitespace-nowrap">{{ agendamento.barbeiro }}</td>
+                        <td class="px-4 sm:px-8 py-4 whitespace-nowrap">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold
+                                {% if agendamento.status == 'confirmado' %}bg-green-950/50 text-green-400 border border-green-900/50
+                                {% elif agendamento.status == 'cancelado' %}bg-red-950/50 text-red-400 border border-red-900/50
+                                {% else %}bg-yellow-950/50 text-yellow-400 border border-yellow-900/50{% endif %}">
+                                {{ agendamento.status|capfirst }}
+                            </span>
+                        </td>
                         <td class="px-4 sm:px-8 py-4">
                             <div class="flex justify-end gap-2">
-                                <a href="{% url 'servico_update' servico.pk %}"
+                                <a href="{% url 'agendamento_update' agendamento.pk %}"
                                     class="px-3 py-1.5 bg-[#1a1a1a] border border-[#333333] hover:bg-[#222222] text-gray-400 hover:text-white rounded-lg transition text-xs font-medium">
                                     Editar
                                 </a>
-                                <a href="{% url 'servico_delete' servico.pk %}"
+                                <a href="{% url 'agendamento_delete' agendamento.pk %}"
                                     class="px-3 py-1.5 bg-red-950/30 border border-red-900/40 hover:bg-red-950/60 text-red-400 rounded-lg transition text-xs font-medium">
                                     Excluir
                                 </a>
@@ -69,11 +80,11 @@
             <div class="p-4 bg-[#161616] border border-[#333333] rounded-2xl text-gray-600 mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
             </div>
-            <p class="text-gray-500 font-medium">Nenhum serviço cadastrado</p>
-            <p class="text-gray-700 text-sm mt-1">Clique em "Novo Serviço" para começar</p>
+            <p class="text-gray-500 font-medium">Nenhum agendamento cadastrado</p>
+            <p class="text-gray-700 text-sm mt-1">Clique em "Novo Agendamento" para começar</p>
         </div>
         {% endif %}
 
