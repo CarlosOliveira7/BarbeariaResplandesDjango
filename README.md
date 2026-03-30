@@ -14,14 +14,6 @@ Além disso, o sistema conta com um módulo financeiro, permitindo o controle de
 
 ---
 
-## Repositório:
-
-Link do projeto no GitHub:
-
-https://github.com/CarlosOliveira7/BarbeariaResplandesDjango
-
----
-
 ## Equipe:
 
 * Andrei Pereira Lima
