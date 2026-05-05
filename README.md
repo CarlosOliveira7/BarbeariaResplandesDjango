@@ -13,14 +13,31 @@ Além disso, o sistema busca simular um ambiente real de gestão, permitindo o c
 Além disso, o sistema conta com um módulo financeiro, permitindo o controle de receitas, despesas e cálculo automático do saldo líquido, auxiliando na gestão financeira da barbearia.
 
 ---
+### **Carlos Oliveira Lopes — Tech Lead & Back-End Developer**
+* Responsável pela arquitetura e desenvolvimento do Back-End
+* Modelagem do banco de dados e regras de negócio
+* Condução de entrevistas e levantamento de requisitos com o cliente
 
-## Equipe:
+### **Andrei Pereira Lima — Front-End Developer**
 
-* Andrei Pereira Lima
-- Carlos Oliveira Lopes
-- João Gabriel Tatsuo Cardoso Watanabe
-- Priscila Ferreira Dias
-- Ywd Rhavell Ferreira Carvalho
+* Desenvolvimento da interface visual do módulo de clientes
+* Implementação do layout e estilização das telas
+
+---
+
+### **Priscila Ferreira Dias Santos — Front-End Developer**
+
+* Desenvolvimento da interface visual do módulo de agendamento
+* Estruturação e estilização das telas
+
+---
+
+### **Ywd Rhavell Ferreira Carvalho — Front-End Developer**
+
+* Desenvolvimento da interface visual do dashboard
+* Criação e organização dos componentes visuais
+
+
 
 ## Tecnologias Utilizadas
 
